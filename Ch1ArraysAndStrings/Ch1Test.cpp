@@ -160,3 +160,56 @@ BOOST_AUTO_TEST_CASE(CH1_prob3_modified) {
 	ch1.prob3(str4);
 	BOOST_CHECK(strcmp(str4, "ab") == 0);
 }
+
+
+BOOST_AUTO_TEST_CASE(CH1_prob4_sort) {
+	CH1 ch1 = CH1();
+
+	string str1 = "abcdaa";
+	string str2 = "dcba";
+	BOOST_CHECK(ch1.prob4_sort(str1, str2) == false);
+
+	str1 = "abcd";
+	str2 = "dcba";
+	BOOST_CHECK(ch1.prob4_sort(str1, str2) == true);
+}
+
+BOOST_AUTO_TEST_CASE(CH1_prob4_map) {
+	CH1 ch1 = CH1();
+
+	string str1 = "abcdfe";
+	string str2 = "dcba";
+	BOOST_CHECK(ch1.prob4_maps(str1, str2) == false);
+
+	str1 = "abcdffe";
+	str2 = "dcbafef";
+	BOOST_CHECK(ch1.prob4_maps(str1, str2) == true);
+
+	str1 = "abcdffe";
+	str2 = "dcbafee";
+	BOOST_CHECK(ch1.prob4_maps(str1, str2) == false);
+}
+
+BOOST_AUTO_TEST_CASE(CH1_prob4_hash) {
+	CH1 ch1 = CH1();
+
+	string str1 = "abcdfe";
+	string str2 = "dcba";
+	BOOST_CHECK(ch1.prob4_hash(str1, str2) == false);
+
+	str1 = "abcdffe";
+	str2 = "dcbafef";
+	BOOST_CHECK(ch1.prob4_hash(str1, str2) == true);
+
+	str1 = "abcdffe";
+	str2 = "dcbafee";
+	BOOST_CHECK(ch1.prob4_hash(str1, str2) == false);
+
+	str1 = "abababcdefgh123";
+	str2 = "bababcdefgh123a";
+	BOOST_CHECK(ch1.prob4_hash(str1, str2) == true);
+
+	str1 = "abababcdefgh123";
+	str2 = "kdjskdjfslskdjf";
+	BOOST_CHECK(ch1.prob4_hash(str1, str2) == false);
+}

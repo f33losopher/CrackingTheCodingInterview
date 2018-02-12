@@ -8,7 +8,9 @@
 #include "Ch1.h"
 #include<iostream>
 
+#include <algorithm>
 #include <cstring>
+#include <map>
 #include <string>
 
 using namespace std;
@@ -148,4 +150,101 @@ void CH1::prob3(char* str) {
 		}
 	}
 	str[rep] = '\0';
+}
+
+// Assume inputs are 2 strings
+// Here are some options
+// 1-Sort the two strings, and then compare them
+// 2-Walk through each and keep track of how many letters are in each
+// 3-Can I come up with an algorithm to hash a word based on letters where order doesn't matter??
+bool CH1::prob4_sort(std::string& str1, std::string& str2) {
+	bool rtn = true;
+	if (str1.length() != str2.length()) {
+		rtn = false;
+	} else {
+		std::sort(str1.begin(), str1.end());
+		std::sort(str2.begin(), str2.end());
+
+		rtn = (str1 == str2);
+	}
+
+	return rtn;
+}
+
+bool CH1::prob4_maps(std::string& str1, std::string& str2) {
+	bool rtn = true;
+	if (str1.length() != str2.length()) {
+		rtn = false;
+	} else {
+		map<char, int> map1;
+		map<char, int> map2;
+		populateMap(map1, str1);
+		populateMap(map2, str2);
+
+		rtn = mapsEqual(map1, map2);
+	}
+
+	return rtn;
+}
+
+bool CH1::prob4_hash(std::string& str1, std::string& str2) {
+	bool rtn = true;
+	if (str1.length() != str2.length()) {
+		rtn = false;
+	} else {
+		unsigned long hash1 = genHash(str1);
+		unsigned long hash2 = genHash(str2);
+
+		cout << "hash1: " << hash1 << " hash2: " << hash2 << endl;
+		rtn = (hash1 == hash2);
+	}
+	return rtn;
+}
+
+void CH1::populateMap(std::map<char, int>& m, std::string str) {
+	for (unsigned int i=0; i < str.length(); ++i) {
+		char c = str[i];
+		if (m.find(c) == m.end()) {
+			m[c] = 1;
+		} else {
+			m[c]++;
+		}
+	}
+}
+
+const bool CH1::mapsEqual(const std::map<char, int>& m1, const std::map<char, int>& m2) const {
+	bool rtn = true;
+
+	std::map<char, int>::const_iterator m1Itr = m1.begin();
+	for (; m1Itr != m1.end(); m1Itr++) {
+		char c = m1Itr->first;
+		int val = m1Itr->second;
+
+		if ((m2.find(c) == m2.end()) || (m2.find(c)->second != val)) {
+			rtn = false;
+			break;
+		}
+	}
+
+	return rtn;
+}
+
+void CH1::printMap(map<char, int>& m) {
+	map<char, int>::iterator mItr = m.begin();
+	for (; mItr != m.end(); mItr++) {
+		string c;
+		c.insert(0, &mItr->first);
+
+		int val = mItr->second;
+		cout << "Key: " << c << " Val: " << val << endl;
+	}
+}
+
+unsigned long CH1::genHash(const string& m) {
+	unsigned long hash = 0;
+	for (int i=0; i < m.length(); ++i) {
+		unsigned long c = m[i];
+		hash += (c * c);
+	}
+	return hash;
 }

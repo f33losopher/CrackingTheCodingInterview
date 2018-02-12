@@ -8,6 +8,7 @@
 #ifndef CH1_H_
 #define CH1_H_
 
+#include <map>
 #include<string>
 
 class CH1 {
@@ -32,8 +33,17 @@ public:
 	void prob3(std::string& str);
 	void prob3(char* str);
 
+	// Write a method to decide if two strings are anagrams or not
+	bool prob4_sort(std::string& str1, std::string& str2);
+	bool prob4_maps(std::string& str1, std::string& str2);
+	bool prob4_hash(std::string& str1, std::string& str2);
+
 	void printCstring(char* str);
+	void printMap(std::map<char, int>& m);
 private:
+	void populateMap(std::map<char, int>& m, std::string str);
+	const bool mapsEqual(const std::map<char, int>& m1, const std::map<char, int>& m2) const;
+	unsigned long genHash(const std::string& m);
 
 };
 
