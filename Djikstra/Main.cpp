@@ -28,6 +28,7 @@ int main() {
 
     g.shortestPath(0);
     g.shortestPath(1);
+    g.shortestPath(2);
 
 	return 0;
 }

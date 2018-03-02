@@ -20,7 +20,7 @@ class Graph {
 	int V;
 
 	// Destination Vertex, Weight to Vertex
-	list< pair<int, int> > *adj;
+	list<iPair> *adj;
 
 public:
 	Graph(int V);

@@ -25,17 +25,25 @@ void Graph::shortestPath(int src) {
 	dist[src] = 0;
 
 	while (!pq.empty()) {
-		int u = pq.top().second;
+		int vertex = pq.top().second;
 		pq.pop();
 
-		list< pair<int, int> >::iterator i;
-		for (i = adj[u].begin(); i != adj[u].end(); ++i) {
-			int v = (*i).first;
-			int weight = (*i).second;
+		cout << "Node to investigate: " << vertex << endl;
 
-			if (dist[v] > dist[u] + weight) {
-				dist[v] = dist[u] + weight;
-				pq.push(make_pair(dist[v], v));
+		list<iPair>::iterator itr;
+		for (itr = adj[vertex].begin(); itr != adj[vertex].end(); ++itr) {
+
+			int neighbor = itr->first;
+			int weightToNeighbor = itr->second;
+
+			cout << "  Neighbor: " << neighbor << " Weight to Neighbor: " << weightToNeighbor << endl;
+
+			cout << "  dist[" << neighbor << "]: " << dist[neighbor] << endl;
+			cout << "  dist[" << vertex << "]:   " << dist[vertex] << endl;
+			cout << "  dist[" << vertex << "] + " << weightToNeighbor << " = " << dist[vertex] + weightToNeighbor << endl;
+			if (dist[neighbor] > dist[vertex] + weightToNeighbor) {
+				dist[neighbor] = dist[vertex] + weightToNeighbor;
+				pq.push(make_pair(dist[neighbor], neighbor));
 			}
 		}
 	}
@@ -43,6 +51,8 @@ void Graph::shortestPath(int src) {
 	printf("Vertex   Distance from Source\n");
 	for (int i=0; i < V; ++i)
 		printf("%d \t\t %d\n", i, dist[i]);
+
+	cout << "********************\n";
 }
 
 
